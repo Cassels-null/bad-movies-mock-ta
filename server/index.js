@@ -1,7 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var request = require('request')
+var request = require('request');
 var app = express();
+var axios = require('axios');
+const { API_KEY } = require('../config.js');
 
 // Sign up and get your moviedb API key here:
 // https://www.themoviedb.org/account/signup
@@ -19,19 +21,11 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 //OPTION 1: Use regular routes
 
-app.get('/genres', function(req, res) {
-  // make an axios request to get the official list of genres from themoviedb
-  
-  // use this endpoint. you will need your API key from signup: https://api.themoviedb.org/3/genre/movie/list
+app.get('/genres', apiHelpers.getGenres);
 
-  // send back
-});
-
-app.get('/search', function(req, res) {
+app.get('/search', apiHelpers.getSearch);
   // use this endpoint to search for movies by genres (using API key): https://api.themoviedb.org/3/discover/movie
-
   // and sort them by votes (worst first) using the search parameters in themoviedb API
-});
 
 
 app.post('/save', function(req, res) {
